@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  arguewebservice:
+    build: .
+    # container_name: argue_webservice
+    volumes:
+      - .:/usr/src/app
+      - static_volume:/usr/src/app/static  # <-- bind the static volume
+      - media_volume:/usr/src/app/media  # <-- bind the media volume
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      - DEBUG=0
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1
+      # - CELERY_BROKER_URL="redis://127.0.0.1:6379"
+      # - CELERY_ACCEPT_CONTENT=['application/json']
+      # - CELERY_RESULT_SERIALIZER='json'
+      # - CELERY_TASK_SERIALIZER='json'
+      # - CELERY_RESULT_BACKEND='django-db'
+      # # - CELERY_CACHE_BACKEND='django-cache'
+      # - CELERY_RESULT_EXTENDED=True
+
+    networks:
+      - nginx_network
+    depends_on:
+      - redis
+
+  nginx:
+    image: pagespeed/nginx-pagespeed:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/usr/src/app/static  # <-- bind the static volume
+      - media_volume:/usr/src/app/media  # <-- bind the media volume
+    depends_on:
+      - arguewebservice
+    networks:
+      - nginx_network
+
+
+  celery:
+    build: .
+    # restart: always
+    command: celery -A core worker -l info #python -m celery -A core worker # Command used to start the Celery worker in the Docker container
+    # command: celery -A core.celery_app worker -l info #python -m celery -A core worker # Command used to start the Celery worker in the Docker container
+    volumes:
+      - /usr/src/app
+
+    depends_on: 
+      - arguewebservice
+      - redis
+    
+    networks:
+      - nginx_network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+
+volumes:
+  static_volume:  # <-- declare the static volume
+  media_volume:  # <-- declare the media volume
