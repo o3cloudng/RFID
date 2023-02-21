@@ -14,6 +14,9 @@ def dashboard(request):
 
 
 def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+        
     form = forms.LoginForm()
     message = ''
     if request.method == 'POST':
