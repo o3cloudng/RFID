@@ -8,7 +8,7 @@ urlpatterns = [
     path("<str:pk>/detail/", UserDetail.as_view(), name="user-detail"),
     path("<str:pk>/delete/", UserDelete.as_view(), name="user-delete"),
     path("my_profile/", user_profile, name="my_profile"),
-    path("login/", login, name="login"),
+    # path("login/", login, name="login"),
     path("register/", register, name="register"),
 ]
 

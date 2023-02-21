@@ -4,19 +4,23 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.views.generic.edit import FormView
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import User
 from .forms import UserForm
 
 # Create your views here.
-class UserList(ListView):
+class UserList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     model = User
     context_object_name = "users"
     paginate_by = 4
     template_name = 'user/index.html'
 
 
-class UserCreateForm(CreateView):
+class UserCreateForm(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     template_name = 'user/add_user.html'
     model = User
     form_class = UserForm
@@ -33,7 +37,8 @@ class UserCreateForm(CreateView):
 # class UserDetail(DetailView):
 #     pass
 
-class UserUpdate(UpdateView):
+class UserUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
     model = User
     form_class = UserForm
     template_name = 'user/add_user.html'
@@ -44,26 +49,29 @@ class UserUpdate(UpdateView):
         messages.success(self.request, "User was updated successfully.")
         return reverse_lazy("user-update", kwargs={"pk": pk})
 
-class UserDetail(DetailView):
+class UserDetail(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
     model = User
     form_class = UserForm
     template_name = 'user/user_profile.html'
 
-class UserDelete(DeleteView):
+class UserDelete(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
     model = User
     # template_name = 'member/confirm_delete.html'
     success_url = reverse_lazy('user:user')
     success_message = "User deleted successfully"
 
 
+@login_required(login_url='/login/')
 def user_profile(request):
     return render(request, 'user/my_profile.html')
 
-
+@login_required(login_url='/login/')
 def login(request):
     return render(request, 'login.html')
 
-
+@login_required(login_url='/login/')
 def register(request):
     return render(request, 'register.html')
 
