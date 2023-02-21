@@ -16,8 +16,6 @@ class User(AbstractUser, TrackingModel):
     email = models.CharField(max_length=255, unique=True)
     phone_number = PhoneNumberField(null=True)
     address = models.CharField(max_length=200, unique=True)
-    # tag_id = models.CharField(max_length=20, unique=True)
-    # notify = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"

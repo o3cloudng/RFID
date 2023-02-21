@@ -7,9 +7,9 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Add New Member</h1>
+            <h1 class="h3 mb-0 text-gray-800">Delete Member</h1>
             <a href="{% url 'member' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-users fa-sm text-white-50"></i> List of members</a>
+                    class="fas fa-users fa-sm text-white-50"></i> Delete</a>
         </div>
     
         <div class="row">
@@ -19,33 +19,39 @@
                 <!-- Card Header - Dropdown -->
                 <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Add New Member</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Delete this Member?</h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                        {% comment %} <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
                             <div class="dropdown-header">Actions:</div>
                             <a class="dropdown-item" href="{% url 'member-detail' pk=member.id %}">View {{ member.firstname }}'s Profile</a>
                             <a class="dropdown-item" href="{% url 'member-delete' pk=member.id %}">Delete {{ member.firstname }}'s Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'member' %}">Message {{ member.firstname }}</a>
-                        </div> {% endcomment %}
+                        </div>
                     </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body text-center">
                     <form class="user" method="POST" action="">
                         {% csrf_token %}
-                        <div class="form-group">
-                            {% include 'template_form.html' %}
-                            {% comment %} {{ form.as_p }} {% endcomment %}
+                        <p class="mx-auto text-center col-6 mt-5">
+                            Are you sure you want to delete "<strong>{{ member.firstname }} {{ member.lastname }}</strong>" with email "<strong>{{ member.email }}</strong>"?
+                        </p>
+                        <hr/>
+    {% comment %} <input type="submit" value="Confirm"> {% endcomment %}
+                        <div class="mx-auto col-6 text-center mb-5">
+                            <button type="submit" class="btn btn-danger btn-user">
+                                Delete member
+                            </button> &nbsp;
+                            <a href="{% url 'member' %}" class="btn btn-outline-danger btn-user">
+                                Back
+                            </a>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                            Add member
-                        </button>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,12 @@
+{% for field in form %}
+    <div class="form-group mb-0 mt-3">
+        {% if field.label_tag == "Notify" %}
+            {{ field.label_tag }}
+        {% endif %}
+        {{ field }}
+    </div>
+    {% if field.errors %}
+        <small class="text-danger mt-0">{{ field.errors|striptags  }}</small> 
+    {% endif %}
+{% endfor %}
+{% comment %} {{ form.as_p }} {% endcomment %}
