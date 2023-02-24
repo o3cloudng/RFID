@@ -6,9 +6,9 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Member List</h1>
-        <a href="{% url 'member-create' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-user fa-sm text-white-50"></i> Add new member</a>
+        <h1 class="h3 mb-0 text-gray-800">Device List</h1>
+        <a href="{% url 'device-create' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-user fa-sm text-white-50"></i> Add new device</a>
     </div>
 
     <div class="row">
@@ -18,7 +18,7 @@
             <!-- Card Header - Dropdown -->
             <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">List of members</h6>
+                <h6 class="m-0 font-weight-bold text-primary">List of devices</h6>
                 <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,23 +38,41 @@
             <div class="card-body">
                     {% comment %} <canvas id="myAreaChart"></canvas> {% endcomment %}
                 <table class="table table-bordered table-radius table-condensed table-hover table-stripped table-responsive-fluid">
+                  <thead>
                     <tr>
-                        <th>FIRST NAME</th><th>LAST NAME</th><th>EMAIL</th><th>TAG ID</th><th>Actions</th>
+                        <th>FIRST NAME</th><th>LAST NAME</th><th>DESCRIPTION</th><th>Actions</th>
+                      </thead>
                     </tr>
-                    {% for member in members %}
-                    <tr>
-                        <td>
-                            {{member.firstname}}</td>
-                            <td>{{member.lastname}}</td>
-                            <td>{{member.parent_guardian_email}}</td>
-                            <td>{{member.tag_id}}</td>
-                            <td>
-                                <a href="{% url 'member-detail' pk=member.id %}" class="btn btn-small btn-primary"><i class="fas fa-fw fa-eye"></i></a> &nbsp;
-                                <a href="{% url 'member-update' pk=member.id %}" class="btn btn-small btn-warning"><i class="fas fa-fw fa-edit"></i></a> &nbsp;
-                                <a href="{% url 'member-delete' pk=member.id %}" class="btn btn-small btn-danger"><i class="fas fa-fw fa-trash"></i></a>
-                            </td>
-                    </tr>
-                    {% endfor %}
+                    <tfoot>
+                      <tr>
+                        <th>FIRST NAME</th><th>LAST NAME</th><th>DESCRIPTION</th><th>Actions</th>
+                      </tr>
+                    </tfoot>
+                    {% if not devices %}
+                    <tbody>
+                      <tr>
+                        <td colspan="4">No record found.
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% else %}
+                      {% for device in devices %}
+                      <tr>
+                          <td>
+                              {{device.location}}</td>
+                              <td>{{device.device_id}}</td>
+                              <td>{{device.description}}</td>
+                              <td>
+                                  <a href="{% url 'device-detail' pk=device.id %}" class="btn btn-small btn-primary"><i class="fas fa-fw fa-eye"></i></a> &nbsp;
+                                  <a href="{% url 'device-update' pk=device.id %}" class="btn btn-small btn-warning"><i class="fas fa-fw fa-edit"></i></a> &nbsp;
+                                  <a href="{% url 'device-delete' pk=device.id %}" class="btn btn-small btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+                              </td>
+                      </tr>
+                      {% endfor %}
+                    {% endif %}
+                    {% comment %} {% else %}
+                    <p class="alert alert-info">No record found.</p>
+                    {% else %} {% endcomment %}
                 </table>
                 <nav aria-label="Page navigation example">
                     {% if is_paginated %}

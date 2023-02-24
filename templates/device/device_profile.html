@@ -1,0 +1,95 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %} <div class="container"> {% endcomment %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Device Detail</h1>
+        <a href="{% url 'device-create' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-user fa-sm text-white-50"></i> Add new device</a>
+    </div>
+
+    <div class="row">
+        <!-- Area Chart -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">{{ device.device_id }}'s  Details</h6>
+                <div class="dropdown no-arrow">
+                    {% comment %} <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a> {% endcomment %}
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                       aria-labelledby="dropdownMenuLink">
+                        {% comment %} <div class="dropdown-header">Actions:</div>
+                        <a class="dropdown-item" href="{% url 'member-update' pk=member.id %}">Edit {{ member.firstname }}'s Profile</a>
+                        <a class="dropdown-item" href="{% url 'member-delete' pk=member.id %}">Delete {{ member.firstname }}'s Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'member' %}">Message {{ member.firstname }}</a> {% endcomment %}
+                    </div> 
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                    <div class="container py-5">
+                  
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="card mb-4">
+                            <div class="card-body text-center">
+                              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                class="rounded-circle img-fluid" style="width: 150px;">
+                              <h5 class="my-3">{{ device.firstname }} {{ device.lastname }}</h5>
+                              <p class="text-muted mb-1">{{ device.parent_guardian_email }}</p>
+                              <p class="text-muted mb-4">{{ device.tag_id }}</p>
+                              <div class="d-flex justify-content-center mb-2">
+                                {% comment %} <button type="button" class="btn btn-primary">Follow</button> &nbsp; {% endcomment %}
+                                {% comment %} <button type="button" class="btn btn-primary ms-1">Send Message</button> {% endcomment %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-8">
+                          <div class="card mb-4">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0">Device ID</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0">{{ device.device_id }}</p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0">Location</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0">{{ device.location }}</p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0">Decritpion</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0">{{ device.description }}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

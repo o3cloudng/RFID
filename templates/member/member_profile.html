@@ -45,7 +45,7 @@
                               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                                 class="rounded-circle img-fluid" style="width: 150px;">
                               <h5 class="my-3">{{ member.firstname }} {{ member.lastname }}</h5>
-                              <p class="text-muted mb-1">{{ member.email }}</p>
+                              <p class="text-muted mb-1">{{ member.parent_guardian_email }}</p>
                               <p class="text-muted mb-4">{{ member.tag_id }}</p>
                               <div class="d-flex justify-content-center mb-2">
                                 {% comment %} <button type="button" class="btn btn-primary">Follow</button> &nbsp; {% endcomment %}
@@ -85,7 +85,7 @@
                                   <p class="mb-0">Email</p>
                                 </div>
                                 <div class="col-sm-9">
-                                  <p class="text-muted mb-0">{{ member.email }}</p>
+                                  <p class="text-muted mb-0">{{ member.parent_guardian_email }}</p>
                                 </div>
                               </div>
                               <hr>
@@ -94,7 +94,7 @@
                                   <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                  <p class="text-muted mb-0">{{ member.phone_number }}</p>
+                                  <p class="text-muted mb-0">{{ member.parent_guardian_phone }}</p>
                                 </div>
                               </div>
                               <hr>
@@ -103,7 +103,7 @@
                                   <p class="mb-0">Guardian</p>
                                 </div>
                                 <div class="col-sm-9">
-                                  <p class="text-muted mb-0">{{ member.parent_guardian }}</p>
+                                  <p class="text-muted mb-0">{{ member.parent_guardian_name }}</p>
                                 </div>
                               </div>
                               <hr>
@@ -112,7 +112,7 @@
                                   <p class="mb-0">Address</p>
                                 </div>
                                 <div class="col-sm-9">
-                                  <p class="text-muted mb-0">{{ member.address }}</p>
+                                  <p class="text-muted mb-0">{{ member.parent_guardian_address }}</p>
                                 </div>
                               </div>
                             </div>

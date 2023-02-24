@@ -1,0 +1,57 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %} <div class="container"> {% endcomment %}
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Add New Device</h1>
+            <a href="{% url 'device' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-users fa-sm text-white-50"></i> List of Device</a>
+        </div>
+    
+        <div class="row">
+            <!-- Area Chart -->
+        <div class="col-xl-7 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Add New Device</h6>
+                    <div class="dropdown no-arrow">
+                        {% comment %} <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a> {% endcomment %}
+                        {% comment %} <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <a class="dropdown-item" href="{% url 'member-detail' pk=member.id %}">View {{ member.firstname }}'s Profile</a>
+                            <a class="dropdown-item" href="{% url 'member-delete' pk=member.id %}">Delete {{ member.firstname }}'s Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'member' %}">Message {{ member.firstname }}</a>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body px-5 pb-4">
+                    <form class="user" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% include 'template_form.html' %}
+                            {% comment %} {{ form.as_p }} {% endcomment %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Save Device
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5" style=");">
+            <img src="{% static '/img/member.jpg' %}" style="width:100%;">
+        </div>
+    </div>
+{% endblock %}
