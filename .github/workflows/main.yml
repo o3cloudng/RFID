@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Login, Build, Tag & Push Action
+      run: |
+        echo "${{ secrets.DOCKER_PASS }}" | docker login -u "o3cloudng" --password-stdin
+        docker image build -t dab8106/pyflask:latest .
+        docker push dab8106/pyflask:latest
