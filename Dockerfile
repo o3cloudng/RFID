@@ -31,8 +31,6 @@ RUN python manage.py collectstatic --no-input -v 2
 EXPOSE 8000
 
 
-
-
 # define the default command to run when starting the container
 # CMD ["gunicorn", "--chdir", "core", "--bind", ":8000", "core.wsgi:application", "--reload"]
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
