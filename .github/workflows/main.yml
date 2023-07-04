@@ -20,9 +20,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Update Ubuntu
+      run: apt-get install update
     - name: Build the Docker image
       run: docker-compose build --no-cache --force-rm 
-      
+
   test:
     runs-on: ubuntu-latest
     steps:
