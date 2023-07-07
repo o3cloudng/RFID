@@ -14,21 +14,22 @@ WORKDIR /usr/src/app
 # install our dependencies
 COPY requirements.txt ./
 
-RUN pip install --upgrade pip
-
 RUN pip install -r requirements.txt
 
 COPY . .
+
 
 # RUN pipenv shell
 # RUN python manage.py makemigrations --no-input 
 
 RUN python manage.py migrate --no-input 
 
-RUN python manage.py collectstatic --no-input -v 2
+RUN python manage.py collectstatic --no-input
 
 # expose the port 8000
 EXPOSE 8000
+
+
 
 
 # define the default command to run when starting the container

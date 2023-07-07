@@ -20,6 +20,8 @@ services:
     depends_on:
       - redis
       - progressdb
+    networks:
+      - nginx_network
 
   celery:
     build: .
@@ -31,10 +33,15 @@ services:
     depends_on: 
       - django_rfid
       - redis
+    networks:
+      - nginx_network
 
   redis:
     image: redis:7-alpine
     restart: always
+    networks:
+      - nginx_network
+    
 
   progressdb:
     image: postgres:15-alpine
@@ -45,7 +52,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pgdata:/var/lib/postgresql/data/
+    networks:
+      - nginx_network
 
+networks:
+  nginx_network:
+    driver: bridge
+    
 volumes:
   static_volume:  # <-- declare the static volume
   media_volume:  # <-- declare the media volume
