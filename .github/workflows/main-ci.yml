@@ -31,24 +31,20 @@ jobs:
 
     - run: pip install -r requirements.txt
 
-    # - name: Docker build and run
-    #   run: |
-    #     docker compose build -t django_rfid .
-
     # Run coverage test
     - name: Test code - Coverage
       run: coverage run -m pytest tests/
 
     # Generate Coverage Report
-    - name: Generate coverage report
-      if: ${{ always() }}
-      run: coverage report > coverage-report
+    # - name: Generate coverage report
+    #   if: ${{ always() }}
+    #   run: coverage report > coverage-report
 
     # Upload Coverage Report Artifact
-    - uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage-report
+    # - uses: actions/upload-artifact@v3
+    #   with:
+    #     name: coverage-report
+    #     path: coverage-report
 
     #  Scan Container Image
     - name: Scan Container Image
@@ -87,6 +83,6 @@ jobs:
       run: |
         gh issue create --title "Workflow failure: ${{ github.workflow }} - ${{ github.sha }}" --body "Failure on job: ${{ github.job }}"
       env:
-        GITHUB_TOKEN = ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
