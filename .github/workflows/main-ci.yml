@@ -42,7 +42,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        tags: o3cloudng/rfid:latest
 
     # Run coverage test
     # - name: Test code - Coverage
@@ -64,7 +64,7 @@ jobs:
       uses: anchore/scan-action@v3
       id: scan
       with:
-        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        image: o3cloudng/rfid:latest
 
     #  Vulnrability testing
     - name: Upload Anchore scan SARIF report
