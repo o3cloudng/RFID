@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
+
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
@@ -61,7 +61,7 @@ jobs:
     - name: Upload Anchore scan SARIF report
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: ${{ step.scan.outputs.sarif }}
+        sarif_file: ${{ steps.scan.outputs.sarif }}
 
     # Image Scan Report
     - uses: actions/upload-artifact@v3
