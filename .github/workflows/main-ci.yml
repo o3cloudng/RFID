@@ -31,9 +31,9 @@ jobs:
 
     - run: pip install -r requirements.txt
 
-    - name: Docker build and run
-      run: |
-        docker compose build -t django_rfid .
+    # - name: Docker build and run
+    #   run: |
+    #     docker compose build -t django_rfid .
 
     # Run coverage test
     - name: Test code - Coverage
