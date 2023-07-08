@@ -1,0 +1,88 @@
+name: Build and Push Docker Image to Docker Hub
+
+on: pull_request
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Update Ubuntu
+      run: apt-get install update
+    # - name: Build the Docker image
+    #   run: docker-compose up --build --no-cache --force-rm 
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10.6"
+        cache: 'pip' # Caching pip dependencies
+
+    - run pip install -r requirements.txt
+
+    - name: Docker build and run
+      run: |
+        docker-compose up --build .
+
+    # Run coverage test
+    - name: Test code - Coverage
+      run: coverage run -m pytest tests/
+
+    # Generate Coverage Report
+    - name: Generate coverage report
+      if: ${{ always() }}
+      run: coverage report > coverage-report
+
+    # Upload Coverage Report Artifact
+    - uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage-report
+
+    #  Scan Container Image
+    - name: Scan Container Image
+      uses: anchore/scan-action@v3
+      id: scan
+      with:
+        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+    #  Vulnrability testing
+    - name: Upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ step.scan.outputs.sarif }}
+
+    # Image Scan Report
+    - uses: actions/upload-artifact@v3
+      with:
+        name: vulnerability-report
+        path: result.sarif
+
+    - name: Login To Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ DOCKER_USERNAME }}
+        password: ${{ DOCKER_TOKEN }}
+
+    - name: Build and Push to Dockerhub
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+    # Create Issue on pipeline failure 
+    - name: Create Issue on Failure
+      if: ${{ failure() }}
+      run: |
+        gh issue create --title "Workflow failure: ${{ github.workflow }} - ${{ github.sha }}" --body "Failure on job: ${{ github.job }}"
+      env:
+        GITHUB_TOKEN = ${{ secrets.GITHUB_TOKEN }}
+
+
