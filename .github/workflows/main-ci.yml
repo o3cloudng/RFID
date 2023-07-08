@@ -29,7 +29,7 @@ jobs:
         python-version: "3.10.6"
         cache: 'pip' # Caching pip dependencies
 
-    - run pip install -r requirements.txt
+    - run: pip install -r requirements.txt
 
     - name: Docker build and run
       run: |
