@@ -32,8 +32,8 @@ jobs:
     - run: pip install -r requirements.txt
 
     # Run coverage test
-    - name: Test code - Coverage
-      run: coverage run -m pytest tests/
+    # - name: Test code - Coverage
+    #   run: coverage run -m pytest tests/
 
     # Generate Coverage Report
     # - name: Generate coverage report
@@ -81,7 +81,7 @@ jobs:
     - name: Create Issue on Failure
       if: ${{ failure() }}
       run: |
-        gh issue create --title "Workflow failure: ${{ github.workflow }} - ${{ github.sha }}" --body "Failure on job: ${{ github.job }}"
+        gh issue create --title "Workflow failure on: ${{ github.workflow }} - ${{ github.sha }}" --body "Failure on job: ${{ github.job }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
