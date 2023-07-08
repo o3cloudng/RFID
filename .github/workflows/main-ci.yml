@@ -74,6 +74,7 @@ jobs:
 
     # Image Scan Report
     - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
       with:
         name: vulnerability-report
         path: result.sarif
