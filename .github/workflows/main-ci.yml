@@ -60,24 +60,24 @@ jobs:
     #     path: coverage-report
 
     #  Scan Container Image
-    # - name: Scan Container Image
-    #   uses: anchore/scan-action@v3
-    #   id: scan
-    #   with:
-    #     image: o3cloudng/rfid:latest
+    - name: Scan Container Image
+      uses: anchore/scan-action@v3
+      id: scan
+      with:
+        image: o3cloudng/rfid:latest
 
-    # #  Vulnrability testing
-    # - name: Upload Anchore scan SARIF report
-    #   uses: github/codeql-action/upload-sarif@v2
-    #   with:
-    #     sarif_file: ${{ steps.scan.outputs.sarif }}
+    #  Vulnrability testing
+    - name: Upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
 
-    # # Image Scan Report
-    # - uses: actions/upload-artifact@v3
-    #   if: ${{ always() }}
-    #   with:
-    #     name: vulnerability-report
-    #     path: result.sarif
+    # Image Scan Report
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: vulnerability-report
+        path: result.sarif
 
     # Create Issue on pipeline failure 
     - name: Create Issue on Failure

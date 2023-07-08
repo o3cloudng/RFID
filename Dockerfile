@@ -5,31 +5,31 @@ FROM python:3.10.6-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-
-# USER devops
-# arbitrary location choice: you can change the directory
-# RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser ./
+
+USER appuser
 
 # install our dependencies
 COPY requirements.txt ./
 
+RUN pip install --upgrade pip
+
 RUN pip install -r requirements.txt
 
-COPY . .
 
+COPY . .
 
 # RUN pipenv shell
 # RUN python manage.py makemigrations --no-input 
 
 RUN python manage.py migrate --no-input 
 
-RUN python manage.py collectstatic --no-input
+RUN python manage.py collectstatic --no-input -v 2
 
 # expose the port 8000
 EXPOSE 8000
-
-
 
 
 # define the default command to run when starting the container
