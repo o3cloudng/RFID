@@ -1,6 +1,6 @@
 name: Build and Push Docker Image to Docker Hub
 
-on: pull_request
+on: main
 
 env:
   # Use docker.io for Docker Hub if empty
