@@ -31,6 +31,19 @@ jobs:
 
     - run: pip install -r requirements.txt
 
+
+    - name: Login To Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+    - name: Build and Push to Dockerhub
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
     # Run coverage test
     # - name: Test code - Coverage
     #   run: coverage run -m pytest tests/
@@ -64,18 +77,6 @@ jobs:
       with:
         name: vulnerability-report
         path: result.sarif
-
-    - name: Login To Dockerhub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_TOKEN }}
-
-    - name: Build and Push to Dockerhub
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
     # Create Issue on pipeline failure 
     - name: Create Issue on Failure
