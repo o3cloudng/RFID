@@ -45,7 +45,7 @@ jobs:
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      command: snyk test
+      command: snyk monitor
     # - name: Set up Node 14
     #   uses: actions/setup-node@v3
     #   with:
