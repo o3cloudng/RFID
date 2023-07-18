@@ -37,9 +37,6 @@ jobs:
       with:
         push: true
         tags: o3cloudng/rfid:latest
-
-    - name: Install pipenv
-      run: pip install pipenv
         
     # - uses: actions/checkout@master
     # - name: Run Snyk to check for vulnerabilities
@@ -57,6 +54,4 @@ jobs:
       run: snyk test
     - name: run Snyk Code Test
       run: snyk code test
-    - name: Snyk monitor
-      run: snyk monitor
         
