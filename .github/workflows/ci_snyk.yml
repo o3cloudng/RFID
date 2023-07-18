@@ -10,7 +10,6 @@ env:
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: rfid
-  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
 jobs:
   Build:
@@ -37,21 +36,24 @@ jobs:
       with:
         push: true
         tags: o3cloudng/rfid:latest
-        
-    # - uses: actions/checkout@master
-    # - name: Run Snyk to check for vulnerabilities
-    #   uses: snyk/actions/node@master
-    #   env:
-    #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-    - name: Set up Node 14
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14
-    - name: install Snyk CLI
-      run: npm install -g snyk
-    - name: run Snyk Open Source Test
-      run: snyk test
-    - name: run Snyk Code Test
-      run: snyk code test
+    - name: Install pipenv
+      run: pip install pipenv
+        
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      command: snyk test
+    # - name: Set up Node 14
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: 14
+    # - name: install Snyk CLI
+    #   run: npm install -g snyk
+    # - name: run Snyk Open Source Test
+    #   run: snyk test
+    # - name: run Snyk Code Test
+    #   run: snyk code test
         
