@@ -1,0 +1,27 @@
+name: Example workflow using Snyk
+on:
+  workflow_run:
+    workflows: [ "Example workflow using Snyk" ]
+    types:
+        completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login To Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+    - name: Build and Push to Dockerhub
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: o3cloudng/rfid:latest
+
+    - name: Pull Image from Dockerhub
+      run: docker run -d o3cloudng/rfid:latest -p 8000:8000
