@@ -12,7 +12,7 @@ env:
   IMAGE_NAME: rfid
 
 jobs:
-  security:
+  Build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -36,8 +36,11 @@ jobs:
       with:
         push: true
         tags: o3cloudng/rfid:latest
+
+    - name: Install pipenv
+      run: pip -m install pipenv
         
-    - uses: actions/checkout@master
+    # - uses: actions/checkout@master
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
