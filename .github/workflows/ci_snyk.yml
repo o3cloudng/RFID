@@ -44,8 +44,9 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      command: snyk monitor
+        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+
+        
     # - name: Set up Node 14
     #   uses: actions/setup-node@v3
     #   with:
