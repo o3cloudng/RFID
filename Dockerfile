@@ -1,5 +1,5 @@
 # start from an official image
-FROM python:3.10.6-alpine
+FROM python:3.13.0a4-alpine
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
